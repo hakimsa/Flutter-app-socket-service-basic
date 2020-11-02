@@ -63,7 +63,7 @@ class _SettingState extends State<Setting> {
           measureFn: (SubscriberSeries series, _) => series.subscribers,
           colorFn: (SubscriberSeries series, _) => series.barColor)
     ];
-
+//
     return new Scaffold(
       appBar: AppBar(),
       drawer: _staticSubscrib(series),
