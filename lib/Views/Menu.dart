@@ -1,67 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iaxpp/Servicios/SocketService.dart';
-import 'package:provider/provider.dart';
 
-class SessionUser extends StatefulWidget {
-  SessionUser({Key key}) : super(key: key);
-
-  @override
-  _SessionUserState createState() => _SessionUserState();
-}
-
-class _SessionUserState extends State<SessionUser> {
+class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final sokectservice = Provider.of<ServiceSocket>(context);
-
-    return Scaffold(
-        drawer: _menu(context),
-        appBar: AppBar(),
-        body: ListView(
-          children: [
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: 200,
-                      child: Card(
-                        child: ListTile(
-                          title: Text(
-                            sokectservice.status.toString(),
-                            style: TextStyle(color: Colors.greenAccent),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 200,
-                      child: Card(
-                        child: ListTile(
-                          title: Text(sokectservice.status.toString(),
-                              style: TextStyle(color: Colors.redAccent)),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 200,
-                      child: Card(
-                        child: ListTile(
-                          title: Text(sokectservice.status.toString()),
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-            _list(context)
-          ],
-        ));
-  }
-
-  _menu(BuildContext context) {
     return Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
@@ -85,7 +26,7 @@ class _SessionUserState extends State<SessionUser> {
         ]));
   }
 
-  _list(BuildContext context) {
+  /*_list(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(20),
       margin: EdgeInsets.all(10),
@@ -141,5 +82,5 @@ class _SessionUserState extends State<SessionUser> {
         ],
       ),
     );
-  }
+  }*/
 }
