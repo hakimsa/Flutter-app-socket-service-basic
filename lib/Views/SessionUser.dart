@@ -29,7 +29,7 @@ class _SessionUserState extends State<SessionUser> {
                       child: Card(
                         child: ListTile(
                           title: Text(
-                            sokectservice.status.toString(),
+                            sokectservice.now.toString(),
                             style: TextStyle(color: Colors.greenAccent),
                           ),
                         ),
@@ -39,7 +39,10 @@ class _SessionUserState extends State<SessionUser> {
                       width: 200,
                       child: Card(
                         child: ListTile(
-                          title: Text(sokectservice.status.toString(),
+                          title: Text(
+                              sokectservice.status.toString() == "Connecting"
+                                  ? "No conectado"
+                                  : "Conectado",
                               style: TextStyle(color: Colors.redAccent)),
                         ),
                       ),
@@ -48,7 +51,7 @@ class _SessionUserState extends State<SessionUser> {
                       width: 200,
                       child: Card(
                         child: ListTile(
-                          title: Text(sokectservice.status.toString()),
+                          title: Text(sokectservice.mesaj.toString()),
                         ),
                       ),
                     )
