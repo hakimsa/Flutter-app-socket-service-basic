@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'Servicios/NewsServices.dart';
 import 'Servicios/SocketService.dart';
 import 'Views/HomePage.dart';
 import 'Views/SessionUser.dart';
@@ -14,13 +15,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => ServiceSocket())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => ServiceSocket()),
+        ChangeNotifierProvider(create: (_) => NewsServices())
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'IAXAPP',
         theme: ThemeData(
-            // brightness: Brightness.dark,
-            ),
+          brightness: Brightness.dark,
+        ),
         initialRoute: '/',
         routes: {
           '/': (BuildContext context) => HomePage(),

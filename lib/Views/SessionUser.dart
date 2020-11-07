@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:iaxpp/Models/NewModel.dart';
+import 'package:iaxpp/Servicios/NewsServices.dart';
 import 'package:iaxpp/Servicios/SocketService.dart';
 import 'package:provider/provider.dart';
 
@@ -10,58 +12,15 @@ class SessionUser extends StatefulWidget {
 }
 
 class _SessionUserState extends State<SessionUser> {
+  List<Article> noticias = new List();
+
   @override
   Widget build(BuildContext context) {
     final sokectservice = Provider.of<ServiceSocket>(context);
+    final newsServices = Provider.of<NewsServices>(context);
 
     return Scaffold(
-        drawer: _menu(context),
-        appBar: AppBar(),
-        body: ListView(
-          children: [
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: 200,
-                      child: Card(
-                        child: ListTile(
-                          title: Text(
-                            sokectservice.now.toString(),
-                            style: TextStyle(color: Colors.greenAccent),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 200,
-                      child: Card(
-                        child: ListTile(
-                          title: Text(
-                              sokectservice.status.toString() == "Connecting"
-                                  ? "No conectado"
-                                  : "Conectado",
-                              style: TextStyle(color: Colors.redAccent)),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 200,
-                      child: Card(
-                        child: ListTile(
-                          title: Text(sokectservice.mesaj.toString()),
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-            _list(context)
-          ],
-        ));
+        drawer: _menu(context), appBar: AppBar(), body: projectWidget());
   }
 
   _menu(BuildContext context) {
@@ -143,6 +102,41 @@ class _SessionUserState extends State<SessionUser> {
           ]),
         ],
       ),
+    );
+  }
+
+  Widget projectWidget() {
+    final newsServices = Provider.of<NewsServices>(context);
+    return FutureBuilder(
+      builder: (context, projectSnap) {
+        if (projectSnap.connectionState == ConnectionState.none &&
+            projectSnap.hasData == null) {
+          //print('project snapshot data is: ${projectSnap.data}');
+          return Container();
+        }
+        return ListView.builder(
+          itemCount: newsServices.handleans.length,
+          itemBuilder: (context, index) {
+            return Column(children: <Widget>[
+              // Widget to display the list of project
+              Card(
+                elevation: 10,
+                child: ListTile(
+                  leading: Image.network(newsServices
+                              .handleans[index].urlToImage ==
+                          null
+                      ? "https://icons.iconarchive.com/icons/icons8/windows-8/128/City-No-Camera-icon.png"
+                      : newsServices.handleans[index].urlToImage),
+                  title: Text(newsServices.handleans[index].title),
+                  subtitle: Text(
+                      newsServices.handleans[index].publishedAt.toString()),
+                ),
+              )
+            ]);
+          },
+        );
+      },
+      future: newsServices.getTopHeadlines(),
     );
   }
 }

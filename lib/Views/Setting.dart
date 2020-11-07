@@ -14,7 +14,7 @@ class _SettingState extends State<Setting> {
   final List<SubscriberSeries> data = [
     SubscriberSeries(
       year: "2008",
-      subscribers: 10000000,
+      subscribers: 300000,
       barColor: charts.ColorUtil.fromDartColor(Colors.brown),
     ),
     SubscriberSeries(
@@ -74,7 +74,7 @@ class _SettingState extends State<Setting> {
           SizedBox(
             height: 40,
           ),
-          _staticSubscrib(series)
+          _staticSubscrib(series),
         ],
       ),
     );
@@ -114,7 +114,6 @@ class _SettingState extends State<Setting> {
             ],
           ),
         ),
-        Container(width: 300, height: 300, child: Text("f")),
       ],
     );
   }
@@ -174,6 +173,7 @@ class _SettingState extends State<Setting> {
                 children: [
                   Text("Nivel de Visualizaciones "),
                   Container(
+                    color: Colors.limeAccent,
                     width: 300,
                     height: 300,
                     child: charts.PieChart(series,
@@ -182,7 +182,8 @@ class _SettingState extends State<Setting> {
                             arcWidth: 45,
                             startAngle: 4 / 5 * 250,
                             arcLength: 7 / 5 * 20)),
-                  )
+                  ),
+                  _crearDropDown()
                 ],
               )),
         ),
@@ -190,7 +191,30 @@ class _SettingState extends State<Setting> {
     );
   }
 
-  void _infoSelectionModelUpdated(charts.SelectionModel model) {
-    //r getProduct();
+  void _infoSelectionModelUpdated(charts.SelectionModel model) {}
+  List<String> _opciones = ["ver videos", "radios", "chat"];
+  List<DropdownMenuItem<String>> getopciones() {
+    List<DropdownMenuItem<String>> lista = new List();
+    _opciones.forEach((opcion) {
+      lista.add(DropdownMenuItem(
+        child: Text(opcion),
+        value: opcion,
+      ));
+    });
+    return lista;
+  }
+
+  String opcionSelecionada = "chat";
+  _crearDropDown() {
+    return DropdownButton(
+      items: getopciones(),
+      value: opcionSelecionada,
+      onChanged: (opt) {
+        print(opt);
+        setState(() {
+          opcionSelecionada = opt;
+        });
+      },
+    );
   }
 }
